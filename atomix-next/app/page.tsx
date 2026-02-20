@@ -1,8 +1,8 @@
-import { getFirstFiveElements } from "@/lib/fetcher";
+import { getElements } from "@/lib/fetcher";
 import ElementCard from "@/components/ElementCard";
 
 export default async function Home() {
-  const elements = await getFirstFiveElements();
+  const elements = await getElements();
 
   return (
     <div className="min-h-screen p-8">
