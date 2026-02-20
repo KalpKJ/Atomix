@@ -29,16 +29,16 @@ export default function ElementCard({ element }: ElementCardProps) {
     <>
       <div
         onClick={() => setIsModalOpen(true)}
-        className="bg-slate-900 border border-slate-800 p-2 rounded-lg cursor-pointer 
-                   hover:border-blue-500 hover:scale-110 transition-all group text-center"
+        className="bg-slate-900 border border-slate-700 rounded cursor-pointer 
+                   hover:border-blue-500 hover:scale-105 transition-all group text-center
+                   w-14 h-14 flex flex-col items-center justify-center p-0.5"
       >
-        <span className="text-xs text-slate-500 font-bold block">
+        <span className="text-xs text-slate-500 font-bold block leading-tight text-center">
           {element.number.toString().padStart(2, '0')}
         </span>
-        <h2 className="text-lg font-black text-white group-hover:text-blue-400 transition-colors">
+        <h2 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-tight truncate w-full">
           {element.symbol}
         </h2>
-        <p className="text-xs text-slate-400 font-medium">{element.name}</p>
       </div>
 
       {isModalOpen && (
