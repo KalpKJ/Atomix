@@ -29,34 +29,16 @@ export default function ElementCard({ element }: ElementCardProps) {
     <>
       <div
         onClick={() => setIsModalOpen(true)}
-        className="p-6 rounded-3xl cursor-pointer transition-all group text-center shadow-lg hover:shadow-2xl relative aspect-square flex flex-col items-center justify-center"
-        style={{
-          backgroundColor: "#1a1a18",
-          border: "2px solid #b5b1a7",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "scale(1.08) translateY(-5px)";
-          e.currentTarget.style.boxShadow = "0 20px 40px rgba(255, 83, 51, 0.3)";
-          e.currentTarget.style.borderColor = "#ff5333";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 10px 20px rgba(0, 0, 0, 0.3)";
-          e.currentTarget.style.borderColor = "#b5b1a7";
-        }}
+        className="bg-slate-900 border border-slate-700 rounded cursor-pointer 
+                   hover:border-blue-500 hover:scale-105 transition-all group text-center
+                   w-14 h-14 flex flex-col items-center justify-center p-0.5"
       >
-        <span 
-          className="absolute top-3 right-3 text-sm font-bold"
-          style={{ color: "#ff5333" }}
-        >
-          {element.number.toString().padStart(2, "0")}
+        <span className="text-xs text-slate-500 font-bold block leading-tight text-center">
+          {element.number.toString().padStart(2, '0')}
         </span>
-        <h2 className="text-5xl font-black mb-3" style={{ color: "#ff5333" }}>
+        <h2 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-tight truncate w-full">
           {element.symbol}
         </h2>
-        <p className="text-sm font-semibold" style={{ color: "#b5b1a7" }}>
-          {element.name}
-        </p>
       </div>
 
       {isModalOpen && (
