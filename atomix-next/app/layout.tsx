@@ -31,9 +31,17 @@ export default function RootLayout({
           src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
           strategy="beforeInteractive"
         />
+        <style>{`
+          :root {
+            --color-dark: #272826;
+            --color-accent: #ff5333;
+            --color-light: #b5b1a7;
+          }
+        `}</style>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-slate-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ backgroundColor: "#272826", color: "#b5b1a7" }}
       >
         {children}
       </body>
