@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atomic Atlas 3D</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-8 font-sans">
+
+    <header class="max-w-6xl mx-auto mb-12 text-center">
+        <h1 class="text-5xl font-black tracking-tighter mb-2 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+            ATOMIC ATLAS
+        </h1>
+        <p class="text-slate-400 font-medium">Interactive 3D Elements Gallery</p>
+    </header>
+
+    <main id="atom-grid" class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
+        <div class="col-span-full text-center py-20 opacity-50">Loading first 5 elements...</div>
+    </main>
+
+    <div id="modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md hidden flex-col items-center justify-center z-50 p-4">
+        <button onclick="closeModal()" class="absolute top-8 right-8 text-slate-400 hover:text-white text-xl font-bold">✕ Close</button>
+        
+        <div class="w-full max-w-3xl aspect-square lg:aspect-video bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl relative">
+            <model-viewer id="main-viewer" src="" auto-rotate camera-controls shadow-intensity="1" class="w-full h-full outline-none"></model-viewer>
+            <div class="absolute bottom-8 left-8">
+                <h2 id="modal-title" class="text-4xl font-bold">Atom Name</h2>
+                <p id="modal-desc" class="text-blue-400 font-mono tracking-widest uppercase">Symbol</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json';
+        const grid = document.getElementById('atom-grid');
+        const modal = document.getElementById('modal');
+        const viewer = document.getElementById('main-viewer');
+
+        async function initApp() {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            
+            // Take only the first 5 elements
+            const firstFive = data.elements.slice(0, 5);
+            
+            grid.innerHTML = ''; // Clear loading text
+            
+            firstFive.forEach(el => {
+                // Create Card element
+                const card = document.createElement('div');
+                card.className = `bg-slate-900 border border-slate-800 p-8 rounded-2xl cursor-pointer 
+                                 hover:border-blue-500 hover:scale-105 transition-all group text-center`;
+                
+                card.innerHTML = `
+                    <span class="text-sm text-slate-500 font-bold block mb-2">0${el.number}</span>
+                    <h2 class="text-4xl font-black text-white group-hover:text-blue-400 transition-colors">${el.symbol}</h2>
+                    <p class="text-slate-400 font-medium mt-1">${el.name}</p>
+                `;
+
+                card.onclick = () => openModal(el);
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(element) {
+            viewer.src = element.bohr_model_3d;
+            document.getElementById('modal-title').innerText = element.name;
+            document.getElementById('modal-desc').innerText = `Atomic Number: ${element.number} | ${element.symbol}`;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            viewer.src = ""; // Stop the engine when hidden to save performance
+        }
+
+        initApp();
+    </script>
+</body>
+</html>
